@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vocabulary Quest – B1+ List 5 "News"</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ══════════════ HOME SCREEN ══════════════ -->
+<div id="home" class="screen active">
+  <div class="stars"></div>
+  <div class="home-content">
+    <div class="logo-badge">📰</div>
+    <h1 class="game-title">Vocabulary Quest</h1>
+    <p class="subtitle">B1+ List 5 · "News" · 40 Words</p>
+    <div class="progress-banner">
+      <span id="home-progress-label">Your Progress</span>
+      <div class="bar-wrap"><div class="bar" id="home-bar"></div></div>
+      <span id="home-score-label">0 / 40 mastered</span>
+    </div>
+    <div class="mode-grid">
+      <button class="mode-btn" onclick="startMode('flashcards')">
+        <span class="mode-icon">🃏</span>
+        <span class="mode-name">Flashcards</span>
+        <span class="mode-desc">Learn &amp; review all words</span>
+      </button>
+      <button class="mode-btn" onclick="startMode('quiz')">
+        <span class="mode-icon">🎯</span>
+        <span class="mode-name">Meaning Quiz</span>
+        <span class="mode-desc">Pick the correct meaning</span>
+      </button>
+      <button class="mode-btn" onclick="startMode('fillin')">
+        <span class="mode-icon">✏️</span>
+        <span class="mode-name">Fill in the Gap</span>
+        <span class="mode-desc">Complete the sentence</span>
+      </button>
+      <button class="mode-btn" onclick="startMode('match')">
+        <span class="mode-icon">🔗</span>
+        <span class="mode-name">Word Match</span>
+        <span class="mode-desc">Match word to meaning</span>
+      </button>
+      <button class="mode-btn" onclick="startMode('spell')">
+        <span class="mode-icon">🔤</span>
+        <span class="mode-name">Spelling Bee</span>
+        <span class="mode-desc">Type the word from clues</span>
+      </button>
+      <button class="mode-btn gold" onclick="startMode('challenge')">
+        <span class="mode-icon">🏆</span>
+        <span class="mode-name">Challenge Mode</span>
+        <span class="mode-desc">All activities · timed!</span>
+      </button>
+    </div>
+    <p class="credit">Created for HCT Students · Nazila Motahari</p>
+  </div>
+</div>
+
+<!-- ══════════════ FLASHCARD SCREEN ══════════════ -->
+<div id="flashcards" class="screen">
+  <div class="top-bar">
+    <button class="back-btn" onclick="goHome()">⬅ Home</button>
+    <span class="top-title">🃏 Flashcards</span>
+    <span class="card-counter" id="fc-counter">1 / 40</span>
+  </div>
+  <div class="fc-area">
+    <div class="flashcard" id="flashcard" onclick="flipCard()">
+      <div class="fc-inner" id="fc-inner">
+        <div class="fc-front">
+          <div class="word-pos" id="fc-pos"></div>
+          <div class="fc-word" id="fc-word"></div>
+          <div class="tap-hint">Tap to reveal meaning</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-meaning" id="fc-meaning"></div>
+          <div class="fc-example" id="fc-example"></div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-controls">
+      <button class="fc-btn red" onclick="fcNav(-1)">⬅ Prev</button>
+      <div class="know-btns">
+        <button class="know-btn no" onclick="markWord(false)">❌ Still Learning</button>
+        <button class="know-btn yes" onclick="markWord(true)">✅ I Know This!</button>
+      </div>
+      <button class="fc-btn blue" onclick="fcNav(1)">Next ➡</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ QUIZ SCREEN ══════════════ -->
+<div id="quiz" class="screen">
+  <div class="top-bar">
+    <button class="back-btn" onclick="goHome()">⬅ Home</button>
+    <span class="top-title">🎯 Meaning Quiz</span>
+    <span class="score-badge" id="quiz-score">⭐ 0</span>
+  </div>
+  <div class="quiz-area">
+    <div class="progress-line"><div class="progress-fill" id="quiz-progress"></div></div>
+    <div class="quiz-question" id="quiz-question">What does this word mean?</div>
+    <div class="quiz-word" id="quiz-word"></div>
+    <div class="quiz-pos" id="quiz-pos"></div>
+    <div class="options-grid" id="quiz-options"></div>
+    <div class="feedback" id="quiz-feedback"></div>
+  </div>
+</div>
+
+<!-- ══════════════ FILL-IN SCREEN ══════════════ -->
+<div id="fillin" class="screen">
+  <div class="top-bar">
+    <button class="back-btn" onclick="goHome()">⬅ Home</button>
+    <span class="top-title">✏️ Fill in the Gap</span>
+    <span class="score-badge" id="fi-score">⭐ 0</span>
+  </div>
+  <div class="quiz-area">
+    <div class="progress-line"><div class="progress-fill" id="fi-progress"></div></div>
+    <p class="fi-instruction">Complete the sentence with the correct word:</p>
+    <div class="fi-sentence" id="fi-sentence"></div>
+    <div class="fi-hint" id="fi-hint"></div>
+    <div class="fi-input-row">
+      <input type="text" id="fi-input" placeholder="Type the missing word..." autocomplete="off" autocorrect="off" spellcheck="false"/>
+      <button class="check-btn" onclick="checkFillIn()">Check ✓</button>
+    </div>
+    <div class="feedback" id="fi-feedback"></div>
+    <button class="next-btn hidden" id="fi-next" onclick="nextFillIn()">Next Word ➡</button>
+  </div>
+</div>
+
+<!-- ══════════════ MATCH SCREEN ══════════════ -->
+<div id="match" class="screen">
+  <div class="top-bar">
+    <button class="back-btn" onclick="goHome()">⬅ Home</button>
+    <span class="top-title">🔗 Word Match</span>
+    <span class="score-badge" id="match-score">⭐ 0</span>
+  </div>
+  <div class="match-area">
+    <div class="progress-line"><div class="progress-fill" id="match-progress"></div></div>
+    <p class="fi-instruction">Tap a word, then tap its meaning!</p>
+    <div class="match-grid">
+      <div class="match-col" id="match-words"></div>
+      <div class="match-col" id="match-meanings"></div>
+    </div>
+    <div class="feedback" id="match-feedback"></div>
+  </div>
+</div>
+
+<!-- ══════════════ SPELLING SCREEN ══════════════ -->
+<div id="spell" class="screen">
+  <div class="top-bar">
+    <button class="back-btn" onclick="goHome()">⬅ Home</button>
+    <span class="top-title">🔤 Spelling Bee</span>
+    <span class="score-badge" id="spell-score">⭐ 0</span>
+  </div>
+  <div class="quiz-area">
+    <div class="progress-line"><div class="progress-fill" id="spell-progress"></div></div>
+    <p class="fi-instruction">Read the meaning and type the correct word:</p>
+    <div class="spell-meaning" id="spell-meaning"></div>
+    <div class="spell-pos" id="spell-pos"></div>
+    <div class="spell-example" id="spell-example"></div>
+    <div class="letter-hint" id="letter-hint"></div>
+    <div class="fi-input-row">
+      <input type="text" id="spell-input" placeholder="Type the word..." autocomplete="off" autocorrect="off" spellcheck="false"/>
+      <button class="check-btn" onclick="checkSpell()">Check ✓</button>
+    </div>
+    <button class="hint-btn" onclick="showLetterHint()">💡 Hint (first letter)</button>
+    <div class="feedback" id="spell-feedback"></div>
+    <button class="next-btn hidden" id="spell-next" onclick="nextSpell()">Next Word ➡</button>
+  </div>
+</div>
+
+<!-- ══════════════ CHALLENGE SCREEN ══════════════ -->
+<div id="challenge" class="screen">
+  <div class="top-bar">
+    <button class="back-btn" onclick="goHome()">⬅ Home</button>
+    <span class="top-title">🏆 Challenge Mode</span>
+    <div class="challenge-meta">
+      <span class="score-badge" id="ch-score">⭐ 0</span>
+      <span class="timer-badge" id="ch-timer">⏱ 60</span>
+    </div>
+  </div>
+  <div class="quiz-area">
+    <div class="progress-line"><div class="progress-fill" id="ch-progress"></div></div>
+    <div class="ch-type-badge" id="ch-type-badge">Quiz</div>
+    <div class="quiz-question" id="ch-question"></div>
+    <div class="quiz-word" id="ch-word"></div>
+    <div class="options-grid" id="ch-options"></div>
+    <div class="fi-input-row hidden" id="ch-input-row">
+      <input type="text" id="ch-input" placeholder="Type your answer..." autocomplete="off" autocorrect="off" spellcheck="false"/>
+      <button class="check-btn" onclick="checkChallenge()">Go ✓</button>
+    </div>
+    <div class="feedback" id="ch-feedback"></div>
+  </div>
+</div>
+
+<!-- ══════════════ RESULTS SCREEN ══════════════ -->
+<div id="results" class="screen">
+  <div class="results-content">
+    <div class="trophy" id="results-trophy">🏆</div>
+    <h2 id="results-title">Well done!</h2>
+    <div class="results-score" id="results-score"></div>
+    <div class="results-msg" id="results-msg"></div>
+    <div class="results-bar-wrap">
+      <div class="results-bar" id="results-bar"></div>
+    </div>
+    <div class="results-btns">
+      <button class="mode-btn" onclick="replayMode()">🔄 Try Again</button>
+      <button class="mode-btn gold" onclick="goHome()">🏠 Home</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
